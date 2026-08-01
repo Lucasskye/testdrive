@@ -1,113 +1,198 @@
-// =========================
+// ===============================
 // ELEMENT
-// =========================
+// ===============================
 
 const gift = document.getElementById("gift");
-const hero = document.querySelector(".hero");
-const content = document.getElementById("content");
+const lid = document.querySelector(".lid");
+const opening = document.getElementById("opening");
+const gallery = document.getElementById("gallery");
 const music = document.getElementById("bgMusic");
-const loading = document.getElementById("loading");
+const petals = document.getElementById("petals");
 
-// =========================
-// LOADING
-// =========================
+// ===============================
+// BACKGROUND PETALS
+// ===============================
 
-window.addEventListener("load", () => {
+function createBackgroundPetal(){
 
-    setTimeout(() => {
+    const p = document.createElement("div");
 
-        loading.style.opacity = "0";
+    p.className = "petal";
 
-        loading.style.transition = ".5s";
+    p.style.left = Math.random()*100 + "vw";
 
-        setTimeout(() => {
+    p.style.animationDuration =
+        (6 + Math.random()*6) + "s";
 
-            loading.style.display = "none";
+    p.style.opacity =
+        0.4 + Math.random()*0.5;
 
-        }, 500);
+    p.style.transform =
+        `scale(${0.5 + Math.random()})`;
 
-    }, 800);
+    petals.appendChild(p);
 
-});
+    setTimeout(()=>{
 
-// =========================
-// BUKA KADO
-// =========================
+        p.remove();
 
-gift.addEventListener("click", () => {
+    },12000);
 
-    // Animasi gift
+}
 
-    gift.style.transition = ".6s";
+setInterval(createBackgroundPetal,350);
 
-    gift.style.transform = "scale(1.2) rotate(10deg)";
+// ===============================
+// GIFT CLICK
+// ===============================
 
-    gift.style.opacity = "0";
+gift.addEventListener("click",()=>{
+
+    gift.style.pointerEvents="none";
+
+    // Tutup kotak terbang
+
+    lid.classList.add("open");
 
     // Musik
 
-    music.play().catch(() => {});
+    music.play().catch(()=>{});
 
-    setTimeout(() => {
+    // Bunga keluar
 
-        hero.style.display = "none";
+    launchFlowers();
 
-        content.classList.remove("hidden");
+    // Masuk galeri
 
-        content.classList.add("fade");
+    setTimeout(()=>{
+
+        opening.style.opacity="0";
+        opening.style.transition="1s";
+
+    },1700);
+
+    setTimeout(()=>{
+
+        opening.style.display="none";
+
+        gallery.classList.add("show");
+
+        revealPhotos();
 
         window.scrollTo({
             top:0,
             behavior:"smooth"
         });
 
-    },700);
+    },2500);
 
 });
 
-// =========================
-// ANIMASI FOTO SAAT SCROLL
-// =========================
+// ===============================
+// FLOWER BURST
+// ===============================
 
-const cards = document.querySelectorAll(".photo-card");
+function launchFlowers(){
 
-const observer = new IntersectionObserver((entries)=>{
+    for(let i=0;i<18;i++){
 
-    entries.forEach(entry=>{
+        const flower =
+        document.createElement("div");
 
-        if(entry.isIntersecting){
+        flower.innerHTML="🌸";
 
-            const index = [...cards].indexOf(entry.target);
+        flower.style.position="fixed";
 
-            setTimeout(()=>{
+        const rect=
+        gift.getBoundingClientRect();
 
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
+        flower.style.left=
+        rect.left+80+"px";
 
-            }, index * 180);
+        flower.style.top=
+        rect.top+40+"px";
 
-        }
+        flower.style.fontSize=
+        (18+Math.random()*18)+"px";
+
+        flower.style.pointerEvents="none";
+
+        flower.style.zIndex="999";
+
+        document.body.appendChild(flower);
+
+        const angle=Math.random()*Math.PI*2;
+
+        const distance=
+        120+Math.random()*180;
+
+        const x=
+        Math.cos(angle)*distance;
+
+        const y=
+        Math.sin(angle)*distance-120;
+
+        flower.animate([
+
+            {
+                transform:"translate(0,0) scale(.5)",
+                opacity:1
+            },
+
+            {
+                transform:`translate(${x}px,${y}px) rotate(${Math.random()*360}deg) scale(1.3)`,
+                opacity:0
+            }
+
+        ],{
+
+            duration:1800,
+
+            easing:"ease-out"
+
+        });
+
+        setTimeout(()=>{
+
+            flower.remove();
+
+        },1800);
+
+    }
+
+}
+
+// ===============================
+// PHOTO ANIMATION
+// ===============================
+
+function revealPhotos(){
+
+    const photos=document.querySelectorAll(".photo");
+
+    const observer=
+    new IntersectionObserver((entries)=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("show");
+
+            }
+
+        });
+
+    },{
+
+        threshold:.2
 
     });
 
-},{
-    threshold:0.2
-});
+    photos.forEach(photo=>{
 
-cards.forEach(card=>{
+        observer.observe(photo);
 
-    observer.observe(card);
+    });
 
-});
-
-// =========================
-// PARALLAX HALUS
-// =========================
-
-window.addEventListener("scroll",()=>{
-
-    const y = window.scrollY;
-
-    document.body.style.backgroundPositionY = -(y*0.2)+"px";
-
-});
+}
