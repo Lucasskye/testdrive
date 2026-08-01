@@ -801,3 +801,30 @@ LETTER
     line-height:2.1;
 
 }
+.photo{
+
+    position:relative;
+
+}
+
+.tape{
+
+    position:absolute;
+
+    width:70px;
+
+    height:20px;
+
+    background:#ffd6e7;
+
+    top:-10px;
+
+    left:50%;
+
+    transform:translateX(-50%) rotate(-5deg);
+
+    opacity:.85;
+
+    border-radius:3px;
+
+}
