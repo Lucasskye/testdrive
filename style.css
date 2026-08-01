@@ -696,3 +696,100 @@ RESPONSIVE
 }
 
 }
+/* =========================
+LETTER
+========================= */
+
+.letter{
+
+    max-width:700px;
+
+    margin:90px auto;
+
+    padding:45px 35px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.45);
+
+    backdrop-filter:blur(10px);
+
+    border-radius:20px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.line{
+
+    width:120px;
+
+    height:2px;
+
+    background:#ff8fb7;
+
+    margin:auto;
+
+    margin-bottom:35px;
+
+}
+
+.letter h3{
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:55px;
+
+    color:#2f2f2f;
+
+    font-weight:600;
+
+}
+
+.letter span{
+
+    color:#f07ba6;
+
+    font-style:italic;
+
+}
+
+.small{
+
+    margin-top:20px;
+
+    font-style:italic;
+
+    color:#9a8b92;
+
+    font-size:22px;
+
+    line-height:1.8;
+
+}
+
+.divider{
+
+    width:60px;
+
+    height:2px;
+
+    background:#ffb2ca;
+
+    margin:35px auto;
+
+}
+
+.message{
+
+    white-space:pre-line;
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:24px;
+
+    color:#4a4a4a;
+
+    line-height:2.1;
+
+}
