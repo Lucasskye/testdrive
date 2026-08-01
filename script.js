@@ -77,8 +77,14 @@ const observer = new IntersectionObserver((entries)=>{
 
         if(entry.isIntersecting){
 
-            entry.target.style.opacity="1";
-            entry.target.style.transform="translateY(0)";
+            const index = [...cards].indexOf(entry.target);
+
+            setTimeout(()=>{
+
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+
+            }, index * 180);
 
         }
 
@@ -89,10 +95,6 @@ const observer = new IntersectionObserver((entries)=>{
 });
 
 cards.forEach(card=>{
-
-    card.style.opacity="0";
-    card.style.transform="translateY(60px)";
-    card.style.transition=".7s";
 
     observer.observe(card);
 
